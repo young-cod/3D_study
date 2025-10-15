@@ -11,7 +11,10 @@ public class Player : MonoBehaviour
 {
     public float rotateSpeed;
     public GameObject target;
-    Weapon weapon;
+
+
+    private Weapon weapon;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +24,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)){
-            weapon.Fire();
-        }
+       
+
     }
 
-    void LookEnemy(){
+    void LookEnemy()
+    {
         Vector3 targetDir = target.transform.position - transform.position;
         Quaternion targetRotate = Quaternion.LookRotation(targetDir);
 
