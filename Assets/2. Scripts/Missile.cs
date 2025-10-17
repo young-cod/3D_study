@@ -45,11 +45,18 @@ public class Missile : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < targets.Count; i++)
+        float angleUnit = 360 / count;
+
+        int maxCount = Mathf.Min(count, targets.Count);
+        //해당 적만큼 분열할것인가 아니면 최대개수를 통해 분열할것인가
+        //호출할때는 최대분열개수를 받긴함
+        for (int i = 0; i < maxCount; i++)
         {
             GameObject currentTarget = targets[i];
+            float angle = angleUnit * i;
+            Quaternion rotation = Quaternion.Euler(0, angle, 0);
 
-            GameObject missileGO = Instantiate(divideMissiePrefab, transform.position, transform.rotation);
+            GameObject missileGO = Instantiate(divideMissiePrefab, transform.position, rotation);
 
             missileGO.GetComponent<Bullet>()?.SelectTargetMove(currentTarget);
         }

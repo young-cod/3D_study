@@ -5,7 +5,7 @@ using Unity.Properties;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, ILookTaget
 {
     private GameObject player;
     public float speed = 7f;
@@ -28,14 +28,21 @@ public class Enemy : MonoBehaviour
     {
         if (player != null)
         {
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            LookTarget();
 
-            Vector3 rotDirection = player.transform.position - transform.position;
-            transform.rotation = Quaternion.Slerp(
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        }
+    }
+
+    public void LookTarget()
+    {
+        Vector3 rotDirection = player.transform.position - transform.position;
+
+        transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 Quaternion.LookRotation(rotDirection),
                 Time.deltaTime * rotSpeed
                 );
-        }
     }
+
 }

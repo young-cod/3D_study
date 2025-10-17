@@ -1,11 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.AI;
-using UnityEngine.Rendering;
-using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(Weapon))]
 [RequireComponent(typeof(Rigidbody))]
@@ -28,8 +21,9 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //rb.velocity = Time.deltaTime * speed * currentDir;
+        //rb.velocity = new Vector3((currentDir*speed).x, rb.velocity.y, 0);
     }
+
 
     // Update is called once per frame
     void Update()
@@ -37,13 +31,13 @@ public class Player : MonoBehaviour
         currentDir = GetInputDirection();
         if (currentDir == Vector3.zero) return;
 
-        LookDirection(currentDir);
-        transform.Translate(Time.deltaTime * speed * Vector3.forward);
+        transform.Translate(currentDir * speed * Time.deltaTime);
+        //LookDirection(currentDir);
     }
 
     Vector3 GetInputDirection()
     {
-        Vector3 inputDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
 
         return inputDir.normalized;
     }
