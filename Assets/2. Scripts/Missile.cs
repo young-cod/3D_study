@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -24,10 +25,26 @@ public class Missile : MonoBehaviour
         TryGetComponent(out rb);
     }
 
-    private void Start()
+    private void OnEnable()
     {
+        ObjectManager.Instance.OnSpawnedObject += SpawnObj;
+        ObjectManager.Instance.OnReturnedObject += ReturnObj;
         rb.AddForce(transform.forward * forcePower, ForceMode.Impulse);
         StartCoroutine(SearchTarget(divideTimer));
+    }
+
+    private void OnDisable()
+    {
+        ObjectManager.Instance.OnSpawnedObject -= SpawnObj;
+        ObjectManager.Instance.OnReturnedObject -= ReturnObj;
+    }
+
+    void ReturnObj(GameObject go, ObjectManager.OBJECT type){
+        Debug.Log($"{go.name}이 반환되었습니다");
+    }
+    void SpawnObj(GameObject go, ObjectManager.OBJECT type)
+    {
+        Debug.Log($"{type}의 {go.name}이 생성되었습니다.");
     }
 
     IEnumerator SearchTarget(float timer)
@@ -45,6 +62,8 @@ public class Missile : MonoBehaviour
             return;
         }
 
+        ObjectManager.Instance.ReturnObject(gameObject);
+
         float angleUnit = 360 / count;
 
         int maxCount = Mathf.Min(count, targets.Count);
@@ -57,7 +76,6 @@ public class Missile : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(0, angle, 0);
 
             GameObject missileGO = Instantiate(divideMissiePrefab, transform.position, rotation);
-
             missileGO.GetComponent<Bullet>()?.SelectTargetMove(currentTarget);
         }
     }

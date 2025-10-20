@@ -26,6 +26,10 @@ public class ObjectManager : MonoBehaviour
     //실질적인 풀
     private Dictionary<OBJECT, ObjectData> dicPool = new Dictionary<OBJECT, ObjectData>();
 
+    public delegate void ObjectPoolAction(GameObject go, OBJECT type);
+    public event ObjectPoolAction OnSpawnedObject;
+    public event ObjectPoolAction OnReturnedObject;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -95,6 +99,8 @@ public class ObjectManager : MonoBehaviour
         obj.SetActive(true);
         obj.transform.SetParent(null);
 
+        OnSpawnedObject?.Invoke(obj,type);
+
         return obj;
     }
 
@@ -113,6 +119,8 @@ public class ObjectManager : MonoBehaviour
         //해당 타입의 풀에 반환
         if (dicPool.TryGetValue(poolable.type, out ObjectData data))
         {
+            OnReturnedObject?.Invoke(obj, poolable.type);
+
             obj.transform.SetParent(data.transform);
             data.pool.Enqueue(obj);
         }else{

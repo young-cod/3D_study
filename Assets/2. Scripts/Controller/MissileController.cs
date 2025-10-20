@@ -24,7 +24,8 @@ public class MissileController : MonoBehaviour
 
     public void Fire()
     {
-        GameObject missile = Instantiate(missilePrefab, muzzleTrs.position,muzzleTrs.rotation);
+        GameObject missile = ObjectManager.Instance.GetObject(ObjectManager.OBJECT.Bullet); 
+        //GameObject missile = Instantiate(missilePrefab, muzzleTrs.position,muzzleTrs.rotation);
     }
 
     
