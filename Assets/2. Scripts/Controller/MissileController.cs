@@ -8,6 +8,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class MissileController : MonoBehaviour
 {
+    [System.Serializable]
+    public struct apple { public int a; }
+
     List<GameObject> targets = new List<GameObject>();
     private Rigidbody rb;
 

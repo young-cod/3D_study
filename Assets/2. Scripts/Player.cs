@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Weapon))]
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
+
+
     public float speed = 10f;
     public float rotateSpeed = 10f;
 
