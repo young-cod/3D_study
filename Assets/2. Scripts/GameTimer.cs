@@ -7,7 +7,7 @@ public class GameTimer : MonoBehaviour
 {
     public event Action<float> ActionOnTimer;
     private float timer;
-
+   
     public float Timer
     {
         get

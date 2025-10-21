@@ -96,16 +96,16 @@ public class CubeMovement : MonoBehaviour
         }
 
         // 위치/회전 보정
-        //Vector3 finalPos = transform.position;
-        //finalPos.x = Mathf.Round(finalPos.x / cubeSize) * cubeSize;
-        //finalPos.z = Mathf.Round(finalPos.z / cubeSize) * cubeSize;
-        //transform.position = finalPos;
+        Vector3 finalPos = transform.position;
+        finalPos.x = Mathf.Round(finalPos.x / cubeSize) * cubeSize;
+        finalPos.z = Mathf.Round(finalPos.z / cubeSize) * cubeSize;
+        transform.position = finalPos;
 
-        //Vector3 euler = transform.eulerAngles;
-        //euler.x = Mathf.Round(euler.x / 90f) * 90f;
-        //euler.y = Mathf.Round(euler.y / 90f) * 90f;
-        //euler.z = Mathf.Round(euler.z / 90f) * 90f;
-        //transform.eulerAngles = euler;
+        Vector3 euler = transform.eulerAngles;
+        euler.x = Mathf.Round(euler.x / 90f) * 90f;
+        euler.y = Mathf.Round(euler.y / 90f) * 90f;
+        euler.z = Mathf.Round(euler.z / 90f) * 90f;
+        transform.eulerAngles = euler;
 
         isMoving = false;
     }
